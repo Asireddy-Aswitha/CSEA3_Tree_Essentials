@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Decorative Planters</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --pastel-green: #e6f5ea;
+      --pastel-green-dark: #9bcba7;
+      --pastel-green-darker: #5e9c75;
+    }
+    body {
+      background-color: var(--pastel-green);
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <header class="bg-[var(--pastel-green-dark)] text-white p-6 text-center text-3xl font-bold">
+    Decorative Planters
+  </header>
+
+  <main class="p-6 max-w-7xl mx-auto">
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+
+    <section class="mt-12 bg-white p-6 rounded-2xl shadow-xl border border-[var(--pastel-green-dark)] max-w-md mx-auto">
+      <h2 class="text-2xl font-bold mb-4 text-[var(--pastel-green-darker)]">Shopping Cart</h2>
+      <ul id="cart-list" class="mb-4 list-disc list-inside text-gray-700"></ul>
+      <p id="cart-total" class="text-lg font-semibold text-[var(--pastel-green-darker)]">Total: $0</p>
+      <button onclick="checkout()" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded">
+        Checkout
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const planterProducts = [
+      { name: 'Ceramic Round Planter', oldPrice: 30, newPrice: 24, image: 'planter1.jpg' },
+      { name: 'Terracotta Pot', oldPrice: 20, newPrice: 16, image: 'planter2.jpg' },
+      { name: 'Hanging Metal Planter', oldPrice: 35, newPrice: 28, image: 'planter3.jpg' },
+      { name: 'Wooden Crate Planter', oldPrice: 40, newPrice: 32, image: 'planter4.jpg' },
+      { name: 'Colorful Mini Pots Set', oldPrice: 25, newPrice: 20, image: 'planter5.jpg' },
+      { name: 'Concrete Geometric Planter', oldPrice: 38, newPrice: 30, image: 'planter6.jpg' },
+      { name: 'Glass Terrarium Bowl', oldPrice: 50, newPrice: 40, image: 'planter7.jpg' },
+      { name: 'Wicker Basket Planter', oldPrice: 28, newPrice: 22, image: 'planter8.jpg' },
+      { name: 'Resin Animal Planter', oldPrice: 33, newPrice: 26, image: 'planter9.jpg' },
+      { name: 'Stone Finish Tall Planter', oldPrice: 45, newPrice: 36, image: 'planter10.jpg' },
+      { name: 'Vintage Tin Bucket Planter', oldPrice: 29, newPrice: 23, image: 'planter11.jpg' },
+      { name: 'Modern Minimalist Planter', oldPrice: 42, newPrice: 34, image: 'planter12.jpg' },
+      { name: 'Painted Clay Pot', oldPrice: 22, newPrice: 18, image: 'planter13.jpg' },
+      { name: 'Gold Accent Ceramic Pot', oldPrice: 55, newPrice: 42, image: 'planter14.jpg' },
+      { name: 'Hexagon Cement Pot', oldPrice: 36, newPrice: 28, image: 'planter15.jpg' },
+      { name: 'Hanging Jute Planter', oldPrice: 31, newPrice: 25, image: 'planter16.jpg' },
+      { name: 'Wall Mounted Planter Set', oldPrice: 48, newPrice: 38, image: 'planter17.jog.jpg' },
+      { name: 'Double Tier Bamboo Planter', oldPrice: 60, newPrice: 48, image: 'planter18.jpg' }
+    ];
+
+    const cart = [];
+    const productGrid = document.getElementById('product-grid');
+    const cartListEl = document.getElementById('cart-list');
+    const cartTotalEl = document.getElementById('cart-total');
+
+    function renderProducts() {
+      planterProducts.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-green-dark)]';
+
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="rounded-xl mb-4 w-full h-48 object-cover" />
+          <h2 class="text-xl font-semibold mb-2">${product.name}</h2>
+          <p class="line-through text-red-400">$${product.oldPrice}</p>
+          <p class="text-[var(--pastel-green-darker)] text-2xl font-bold mb-4">$${product.newPrice}</p>
+          <div class="flex gap-3">
+            <button onclick="addToCart('${product.name}', ${product.newPrice})"
+              class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded flex-1">
+              Add to Cart
+            </button>
+            <button onclick="buyNow('${product.name}', ${product.newPrice})"
+              class="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded flex-1">
+              Buy Now
+            </button>
+          </div>
+        `;
+        productGrid.appendChild(card);
+      });
+    }
+
+    function updateCartDisplay() {
+      cartListEl.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - $${item.price}`;
+        cartListEl.appendChild(li);
+        total += item.price;
+      });
+      cartTotalEl.textContent = 'Total: $' + total.toFixed(2);
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCartDisplay();
+      alert(name + ' added to cart!');
+    }
+
+    function buyNow(name, price) {
+      alert(`Thank you for purchasing ${name} for $${price.toFixed(2)}!`);
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      let summary = 'You have purchased:\n';
+      cart.forEach(item => {
+        summary += `- ${item.name} for $${item.price.toFixed(2)}\n`;
+      });
+      summary += `Total: $${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}\n`;
+      alert(summary + 'Thank you for your purchase!');
+      cart.length = 0;
+      updateCartDisplay();
+    }
+
+    // Render products on load
+    renderProducts();
+  </script>
+</body>
+</html>
