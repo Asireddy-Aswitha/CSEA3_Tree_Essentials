@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gardening Accessories - Tools & Essentials</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --pastel-purple: #e6d7f0;
+      --pastel-purple-dark: #a18fc1;
+      --pastel-purple-darker: #8160a3;
+    }
+    body {
+      background-color: var(--pastel-purple);
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <header class="bg-[var(--pastel-purple-dark)] text-white p-6 text-center text-3xl font-bold">
+    Gardening Accessories - Tools & Essentials
+  </header>
+
+  <main class="p-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- Product 1 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="gloves.jpg" alt="Gardening Gloves" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Gardening Gloves</h2>
+        <p class="line-through text-red-400">$15</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$12</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Gardening Gloves', 12)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Gardening Gloves', 12)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="shears.jpg" alt="Pruning Shears" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Pruning Shears</h2>
+        <p class="line-through text-red-400">$30</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$25</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Pruning Shears', 25)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Pruning Shears', 25)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="watercan.jpg" alt="Watering Can" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Watering Can</h2>
+        <p class="line-through text-red-400">$22</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$18</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Watering Can', 18)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Watering Can', 18)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="soiltester.jpg" alt="Soil Tester" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Soil Tester</h2>
+        <p class="line-through text-red-400">$40</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$35</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Soil Tester', 35)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Soil Tester', 35)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="kneeler.jpg" alt="Garden Kneeler" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Garden Kneeler</h2>
+        <p class="line-through text-red-400">$50</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$42</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Garden Kneeler', 42)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Garden Kneeler', 42)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="hose.jpg" alt="Hose Nozzle" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Hose Nozzle</h2>
+        <p class="line-through text-red-400">$18</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$15</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Hose Nozzle', 15)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Hose Nozzle', 15)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 7 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="plantlabel.jpg" alt="Plant Labels" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Plant Labels</h2>
+        <p class="line-through text-red-400">$10</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$8</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Plant Labels', 8)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Plant Labels', 8)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 8 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="fork.jpg" alt="Garden Fork" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Garden Fork</h2>
+        <p class="line-through text-red-400">$28</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$23</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Garden Fork', 23)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Garden Fork', 23)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Product 9 -->
+      <div class="bg-white p-4 rounded-2xl shadow-lg border border-[var(--pastel-purple-dark)]">
+        <img src="wheel.jpg" alt="Wheelbarrow" class="rounded-xl mb-4" />
+        <h2 class="text-xl font-semibold mb-2">Wheelbarrow</h2>
+        <p class="line-through text-red-400">$120</p>
+        <p class="text-[var(--pastel-purple-darker)] text-2xl font-bold mb-4">$110</p>
+        <div class="flex gap-3">
+          <button onclick="addToCart('Wheelbarrow', 110)" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex-1">Add to Cart</button>
+          <button onclick="buyNow('Wheelbarrow', 110)" class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 px-4 rounded flex-1">Buy Now</button>
+        </div>
+      </div>
+
+    </div>
+
+    <section class="mt-12 bg-white p-6 rounded-2xl shadow-xl border border-[var(--pastel-purple-dark)] max-w-md mx-auto">
+      <h2 class="text-2xl font-bold mb-4 text-[var(--pastel-purple-darker)]">Shopping Cart</h2>
+      <ul id="cart-list" class="mb-4 list-disc list-inside text-gray-700"></ul>
+      <p id="cart-total" class="text-lg font-semibold text-[var(--pastel-purple-darker)]">Total: $0</p>
+      <button onclick="checkout()" class="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded">Checkout</button>
+    </section>
+  </main>
+
+  <script>
+    const cart = [];
+    const cartListEl = document.getElementById('cart-list');
+    const cartTotalEl = document.getElementById('cart-total');
+
+    function updateCartDisplay() {
+      cartListEl.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+        cartListEl.appendChild(li);
+        total += item.price;
+      });
+      cartTotalEl.textContent = 'Total: $' + total.toFixed(2);
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCartDisplay();
+      alert(name + ' added to cart!');
+    }
+
+    function buyNow(name, price) {
+      alert(`Thank you for purchasing ${name} for $${price.toFixed(2)}!`);
+    }
+
+    function checkout() {
+      if(cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      let summary = 'You have purchased:\n';
+      cart.forEach(item => {
+        summary += `- ${item.name} for $${item.price.toFixed(2)}\n`;
+      });
+      summary += `Total: $${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}\n`;
+      alert(summary + 'Thank you for your purchase!');
+      cart.length = 0; // Clear cart
+      updateCartDisplay();
+    }
+  </script>
+</body>
+</html>
