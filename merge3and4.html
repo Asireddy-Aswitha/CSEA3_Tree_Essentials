@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TREE ESSENTIALS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .trending, .items, .banner {
+      margin: 20px;
+    }
+
+    .items {
+      display: flex; flex-wrap: wrap;
+      gap: 30px; justify-content: center;
+    }
+
+    .item {
+      background: white; border-radius: 50%;
+      padding: 15px; width: 180px; height: 180px;
+      text-align: center;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .item img {
+      width: 80px; height: 80px;
+      border-radius: 50%; object-fit: cover;
+    }
+
+    .item p { margin-top: 10px; font-size: 14px; }
+
+    .banner {
+      display: flex; gap: 20px;
+      justify-content: space-between;
+      margin-top: 60px;
+    }
+
+    .banner div {
+      flex: 1; background-color: #f3f3f3;
+      padding: 15px; border-radius: 8px;
+      text-align: center; cursor: pointer;
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4); display: none;
+      align-items: center; justify-content: center;
+    }
+
+    .modal-content {
+      background: white; padding: 20px; border-radius: 8px;
+      width: 300px; text-align: center;
+    }
+
+    .modal-content input {
+      width: 100%; margin-bottom: 10px; padding: 8px;
+    }
+
+    .modal-content button {
+      width: 100%; padding: 8px; background-color: green;
+      color: white; border: none; border-radius: 4px;
+    }
+
+    /* Pastel red palette */
+    :root {
+      --pastel-red-light: #f9d5d3;
+      --pastel-red-medium: #f4a6a3;
+      --pastel-red-dark: #d65a57;
+      --text-dark: #4a2c2a;
+      --background: #fff5f5;
+      --shadow: rgba(214, 90, 87, 0.25);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+      color: var(--pastel-red-dark);
+      text-shadow: 1px 1px 3px rgba(214, 90, 87, 0.3);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .plant-card {
+      background: var(--pastel-red-light);
+      border-radius: 15px;
+      box-shadow: 0 6px 15px var(--shadow);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .plant-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px var(--shadow);
+      border-color: var(--pastel-red-medium);
+    }
+
+    .plant-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-bottom: 4px solid var(--pastel-red-medium);
+      border-radius: 15px 15px 0 0;
+      transition: filter 0.3s ease;
+    }
+
+    .plant-card:hover .plant-image {
+      filter: brightness(1.1);
+    }
+
+    .plant-summary {
+      padding: 18px 20px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--pastel-red-dark);
+      text-shadow: 0 0 2px rgba(214, 90, 87, 0.4);
+    }
+
+    .read-more-btn {
+      background-color: var(--pastel-red-medium);
+      border: 2px solid var(--pastel-red-dark);
+      color: white;
+      padding: 12px 0;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 4px 8px rgba(244, 166, 163, 0.8);
+      transition: 
+        background-color 0.3s ease, 
+        box-shadow 0.4s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+    }
+
+    .read-more-btn:hover,
+    .read-more-btn:focus {
+      background-color: var(--pastel-red-dark);
+      box-shadow: 0 0 12px 4px rgba(214, 90, 87, 0.7);
+      border-color: var(--pastel-red-light);
+      color: #fff9f9;
+      outline: none;
+    }
+
+    .read-more-btn:focus-visible {
+      outline: 3px solid var(--pastel-red-light);
+      outline-offset: 3px;
+    }
+
+    .plant-details {
+      display: none;
+      padding: 20px;
+      background: #fce7e6;
+      font-size: 15px;
+      color: var(--text-dark);
+      line-height: 1.4;
+      border-radius: 0 0 15px 15px;
+    }
+
+    .plant-details img,
+    .plant-details video {
+      width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Trending -->
+  <div class="trending">
+    <h2>Trending</h2>
+  </div>
+
+  <!-- Items Section -->
+  <div class="items" id="itemsContainer">
+    <div class="item" onclick="viewItem('Bonsai Plants')">
+      <img src="Bonsai plant.jpg" alt="Bonsai">
+      <p>Bonsai Plants - Upto 25% Off</p>
+    </div>
+    <div class="item" onclick="viewItem('Ceramic Planters')">
+      <img src="Ceramic planters.jpg" alt="Ceramic">
+      <p>Ceramic Planters - Starting ₹299</p>
+    </div>
+    <div class="item" onclick="viewItem('Kokedama')">
+      <img src="Kokedama plant.jpg" alt="Kokedama">
+      <p>Kokedama - Starting ₹249</p>
+    </div>
+    <div class="item" onclick="viewItem('Month Wise Gardening')">
+      <img src="gardenis.jpg" alt="Gardening">
+      <p>Month Wise Gardening - Upto 65% Off</p>
+    </div>
+  </div>
+
+  <!-- Banners -->
+  <div class="banner">
+    <div onclick="location.href='planters.html'">
+      <h3>Planters - Starting ₹129</h3>
+      <p>Add color to your garden. 400+ pots of different materials</p>
+    </div>
+    <div onclick="location.href='soilandfertilizers.html'">
+      <h3>Soil & Fertilizers - Starting ₹100</h3>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h3>Login</h3>
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <h3>Your Cart</h3>
+      <p>Bonsai Plants x1 - ₹499</p>
+      <p>Total: ₹499</p>
+      <button onclick="closeCart()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      alert("Login successful!");
+      document.getElementById("loginModal").style.display = "none";
+    }
+
+    function closeCart() {
+      document.getElementById("cartModal").style.display = "none";
+    }
+
+    function viewItem(name) {
+      alert("Navigating to details of: " + name);
+    }
+
+    window.addEventListener("click", function(e) {
+      const loginModal = document.getElementById("loginModal");
+      const cartModal = document.getElementById("cartModal");
+      if (e.target === loginModal) loginModal.style.display = "none";
+      if (e.target === cartModal) cartModal.style.display = "none";
+    });
+  </script>
+
+  <!-- Second Page Content -->
+  <h1>Plant Care & Growth Notes - Indian Plants & Trees</h1>
+
+  <div class="container">
+    
+    <!-- Neem Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="neem.jpg" alt="Neem Tree" />
+      <div class="plant-summary">Neem Tree - Known as the 'Village Pharmacy', famous for medicinal properties.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Neem prefers full sun, well-drained soil. Water moderately during dry periods. Tolerant to drought and pests.</p>
+        <img src="neemleaves.jpg" alt="Neem Leaves" />
+        <video controls>
+          <source src="https://www.youtube.com/shorts/LcKnlUlEbJc?feature=share" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Banyan Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="banyan.jpg" alt="Banyan Tree" />
+      <div class="plant-summary">Banyan Tree - National tree of India, famous for its aerial roots and shade.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Requires full sun, deep watering especially when young. Thrives in tropical and subtropical climates.</p>
+        <img src="banyanroots.jpg" alt="Banyan Tree Roots" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/asdasdas.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Tulsi Plant Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="tulasi.jpg" alt="Tulsi Plant" />
+      <div class="plant-summary">Tulsi (Holy Basil) - Sacred plant with medicinal and spiritual significance.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Grows best in warm, sunny places. Water regularly but do not overwater. Prefers well-drained soil.</p>
+        <img src="tualsileaves.jpg" alt="Tulsi Leaves" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Mango Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="mango.jpg" alt="Mango Tree" />
+      <div class="plant-summary">Mango Tree - The king of fruits, widely grown across India.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Prefers full sunlight and deep, well-drained soil. Water young plants regularly; mature trees are drought tolerant.</p>
+        <img src="mangofandl.jpg" alt="Mango Fruit and Leaves" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Marigold Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="marigold.jpg" alt="Marigold" />
+      <div class="plant-summary">Marigold - Bright and cheerful flower, widely used in Indian festivals and rituals.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Requires full sun and well-drained soil. Water moderately; deadhead spent flowers for prolonged blooming.</p>
+        <img src="marigoldflowers.jpg" alt="Marigold Flowers" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/asdasdas.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Jasmine Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="jasm.jpg" alt="Jasmine" />
+      <div class="plant-summary">Jasmine - Fragrant flowering plant widely grown in India for its scent and beauty.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Thrives in full sun to partial shade. Water regularly but avoid waterlogging. Prefers fertile, well-drained soil.</p>
+        <img src="jasm.jpg" alt="Jasmine Flowers" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Tulip Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="tulip.jpg" alt="Tulip Tree (Saptaparni)" />
+      <div class="plant-summary">Tulip Tree (Saptaparni) - Known for its fragrant flowers and traditional medicinal uses.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Prefers full to partial sunlight. Requires well-drained soil and moderate watering. Tolerates a range of soil types.</p>
+        <img src="tulip.jpg" alt="Tulip Tree Flower" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Lotus Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="lotus.jpg" alt="Lotus" />
+      <div class="plant-summary">Lotus - Sacred Indian national flower symbolizing purity and beauty.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Needs full sunlight and still, shallow water. Use rich, loamy soil in containers or ponds. Avoid water disturbance.</p>
+        <img src="lotus.jpg" alt="Lotus Flower" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/asdasdas.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleDetails(button) {
+      const details = button.nextElementSibling;
+      if (details.style.display === "block") {
+        details.style.display = "none";
+        button.textContent = "Read More";
+      } else {
+        details.style.display = "block";
+        button.textContent = "Read Less";
+      }
+    }
+  </script>
+
+</body>
+</html>
