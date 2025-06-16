@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NurseryLive Support</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 15px 30px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #4caf50;
+    }
+
+    .logo span {
+      color: black;
+    }
+
+    .nav-links a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .nav-links a:hover,
+    .nav-links .chat-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .hero input {
+      width: 50%;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 20px 25px;
+      width: 280px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #555;
+      font-size: 14px;
+    }
+
+    .knowledge {
+      text-align: center;
+      margin-top: 20px;
+      padding: 20px;
+    }
+
+    .knowledge a {
+      color: #4caf50;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .faq {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .faq h2 {
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      margin-bottom: 15px;
+    }
+
+    .faq-item h4 {
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .faq-item p {
+      color: #555;
+      font-size: 14px;
+    }
+
+    .chat-modal {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 30px;
+      width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 999;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: #4caf50;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-body {
+      max-height: 250px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+
+    .chat-input button {
+      padding: 8px 12px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .chat-msg {
+      background: #f1f1f1;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .chat-msg.user {
+      background: #d4edda;
+      align-self: flex-end;
+    }
+
+    .close-chat {
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .hero input {
+        width: 90%;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo">TREE<span>ESSENTIALS</span> Support</div>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Knowledge base</a>
+      <a href="#">Login</a>
+      <a href="#" class="chat-btn" onclick="toggleChat()">💬 Chat</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Hi, how can we help you?</h1>
+    <input type="text" placeholder="Enter the search term here...">
+  </section>
+
+  <!-- Support Cards -->
+  <section class="cards">
+    <div class="card">
+      <h3>📚 Browse articles</h3>
+      <p>Explore How-To's and learn best practices from our knowledge base.</p>
+    </div>
+  </section>
+
+  <!-- Knowledge Base Link -->
+  <div class="knowledge">
+    <p><strong>Knowledge base</strong></p>
+    <a href="#">View all articles</a>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>Common Queries</h2>
+    <div class="faq-item">
+      <h4>Why are my plant leaves turning yellow?</h4>
+      <p>Yellowing leaves can be due to overwatering, underwatering, or poor lighting. Make sure the plant gets enough indirect light and the soil drains well.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How often should I water my indoor plants?</h4>
+      <p>Most indoor plants prefer watering once a week. Check if the top inch of the soil is dry before watering.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Which plants are best for purifying air?</h4>
+      <p>Snake plant, Spider plant, and Areca palm are great options for air purification.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is the best fertilizer for trees?</h4>
+      <p>Use a balanced NPK (Nitrogen, Phosphorus, Potassium) fertilizer in the ratio 10:10:10 or 14:14:14 during the growing season.</p>
+    </div>
+  </section>
+
+  <!-- Chat Modal -->
+  <div class="chat-modal" id="chatBox">
+    <div class="chat-header">
+      Customer Support
+      <span class="close-chat" onclick="toggleChat()">✖</span>
+    </div>
+    <div class="chat-body" id="chatMessages">
+      <div class="chat-msg">Hi! How can we help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleChat() {
+      const chatBox = document.getElementById("chatBox");
+      chatBox.style.display = chatBox.style.display === "flex" ? "none" : "flex";
+      chatBox.style.flexDirection = 'column';
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const chatMessages = document.getElementById("chatMessages");
+      const userMsg = input.value.trim();
+
+      if (userMsg !== "") {
+        const msg = document.createElement("div");
+        msg.className = "chat-msg user";
+        msg.textContent = userMsg;
+        chatMessages.appendChild(msg);
+
+        input.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        setTimeout(() => {
+          const reply = generateReply(userMsg.toLowerCase());
+          const botMsg = document.createElement("div");
+          botMsg.className = "chat-msg";
+          botMsg.textContent = reply;
+          chatMessages.appendChild(botMsg);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+      }
+    }
+
+    function generateReply(input) {
+      if (input.includes("yellow")) {
+        return "Yellowing leaves are often caused by overwatering, underwatering, or lack of light.";
+      } else if (input.includes("water")) {
+        return "Most indoor plants need watering once a week. Check if the top soil is dry.";
+      } else if (input.includes("purify") || input.includes("air")) {
+        return "Snake plant, Spider plant, and Areca palm are great for air purification.";
+      } else if (input.includes("fertilizer")) {
+        return "Use NPK 10:10:10 or 14:14:14 fertilizer during growing season.";
+      } else if (input.includes("pest") || input.includes("insect")) {
+        return "Try neem oil or insecticidal soap to get rid of pests naturally.";
+      } else if (input.includes("sunlight")) {
+        return "Most indoor plants prefer indirect bright light. Avoid direct harsh sunlight.";
+      } else if (input.includes("delivery")) {
+        return "Please allow 5–7 working days for delivery. Contact us if it's delayed.";
+      } else if (input.includes("order")) {
+        return "Please share your order ID, and we’ll help you track it.";
+      } else {
+        return "Thanks for your question! A support agent will reply shortly.";
+      }
+    }
+  </script>
+
+</body>
+</html>
