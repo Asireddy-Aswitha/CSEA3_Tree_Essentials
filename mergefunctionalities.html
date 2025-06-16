@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tree Essentials</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+    /* Top Navigation */
+    .top-nav {
+      background: #f3f3f3;
+      padding: 6px 20px;
+      font-size: 13px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 25px;
+      user-select: none;
+    }
+    .top-nav span {
+      cursor: pointer;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    .top-nav span:hover {
+      color: #43a047;
+      text-decoration: underline;
+    }
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      gap: 20px;
+    }
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #333;
+      white-space: nowrap;
+    }
+    .logo span {
+      color: #43a047;
+    }
+    .search-bar {
+      flex-grow: 1;
+      max-width: 600px;
+      padding: 8px 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+    .search-bar:focus {
+      border-color: #43a047;
+      box-shadow: 0 0 5px #43a047aa;
+    }
+    /* Icons */
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .icons span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #555;
+      cursor: pointer;
+      user-select: none;
+    }
+    .icons i {
+      font-size: 20px;
+      cursor: pointer;
+      color: #555;
+      transition: color 0.3s ease;
+    }
+    .icons i:hover {
+      color: #43a047;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #d65a57;
+      color: #fff;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+      font-weight: bold;
+      display: none;
+    }
+    /* Category Menu */
+    .category-menu ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      padding: 10px 20px;
+      margin: 0;
+      background-color: #f8f8f8;
+      overflow-x: auto;
+      scrollbar-width: none;
+      justify-content: center;
+    }
+    .category-menu ul::-webkit-scrollbar {
+      display: none;
+    }
+    .category-menu li {
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+      color: #444;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .category-menu li:hover {
+      color: #43a047;
+      border-color: #43a047;
+    }
+    /* Circle Categories */
+    .circle-categories {
+      display: flex;
+      gap: 20px;
+      padding: 15px 20px;
+      overflow-x: auto;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      scrollbar-width: none;
+    }
+    .circle-categories::-webkit-scrollbar {
+      display: none;
+    }
+    .circle {
+      width: 80px;
+      height: 80px;
+      background: #f1f1f1;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      color: #444;
+      user-select: none;
+    }
+    .circle i {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .circle:hover {
+      background-color: #43a047;
+      color: #fff;
+      box-shadow: 0 4px 8px rgba(67,160,71,0.5);
+    }
+    /* Hero Section */
+    .hero {
+      position: relative;
+      text-align: center;
+      color: #333;
+    }
+    .hero img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hero-text {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+    .hero-text p {
+      font-size: 24px;
+      margin: 10px 0 0 0;
+    }
+    .hero-text span {
+      color: #b71c1c;
+      font-weight: bold;
+    }
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 6px;
+      width: 320px;
+      max-width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal h2, .modal-content h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-weight: 700;
+      font-size: 22px;
+      color: #43a047;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: #43a047;
+    }
+    .modal input[type="text"], .modal input[type="password"], .modal-content input[type="email"], .modal-content input[type="password"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin: 8px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+      outline-offset: 2px;
+    }
+    .modal button, .modal-content button {
+      width: 100%;
+      background-color: #43a047;
+      color: white;
+      border: none;
+      padding: 10px 0;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .modal button:hover, .modal-content button:hover {
+      background-color: #388e3c;
+    }
+    /* Services Section */
+    .services {
+      display: flex;
+      justify-content: space-around;
+      background-color: #f0f0f0;
+      padding: 20px 0;
+      flex-wrap: wrap;
+    }
+    .service {
+      text-align: center;
+      font-size: 14px;
+      margin: 10px;
+    }
+    .service img {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 5px;
+    }
+    /* Products Section */
+    .products {
+      padding: 20px 40px;
+    }
+    .products h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      display: block;
+      background-color: white;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.3s ease;
+    }
+    .product:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: gray;
+      font-size: 0.9em;
+      margin-left: 5px;
+    }
+    .title {
+      font-size: 14px;
+      margin: 8px 0 4px;
+    }
+    .rating {
+      font-size: 13px;
+      color: #666;
+    }
+    .tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 12px;
+      background: #f00;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .tag.pink {
+      background: hotpink;
+    }
+    /* Cart Modal */
+    #cartModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      align-items: center; justify-content: center;
+      z-index: 1001;
+    }
+    .modal-content {
+      background: white; padding: 20px; border-radius: 8px;
+      width: 300px; text-align: center;
+    }
+    /* Pastel red palette for plant cards */
+    :root {
+      --pastel-red-light: #f9d5d3;
+      --pastel-red-medium: #f4a6a3;
+      --pastel-red-dark: #d65a57;
+      --text-dark: #4a2c2a;
+      --background: #fff5f5;
+      --shadow: rgba(214, 90, 87, 0.25);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+      color: var(--pastel-red-dark);
+      text-shadow: 1px 1px 3px rgba(214, 90, 87, 0.3);
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .plant-card {
+      background: var(--pastel-red-light);
+      border-radius: 15px;
+      box-shadow: 0 6px 15px var(--shadow);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .plant-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px var(--shadow);
+      border-color: var(--pastel-red-medium);
+    }
+    .plant-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-bottom: 4px solid var(--pastel-red-medium);
+      border-radius: 15px 15px 0 0;
+      transition: filter 0.3s ease;
+    }
+    .plant-card:hover .plant-image {
+      filter: brightness(1.1);
+    }
+    .plant-summary {
+      padding: 18px 20px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--pastel-red-dark);
+      text-shadow: 0 0 2px rgba(214, 90, 87, 0.4);
+    }
+    .read-more-btn {
+      background-color: var(--pastel-red-medium);
+      border: 2px solid var(--pastel-red-dark);
+      color: white;
+      padding: 12px 0;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 4px 8px rgba(244, 166, 163, 0.8);
+      transition: 
+        background-color 0.3s ease, 
+        box-shadow 0.4s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+    }
+    .read-more-btn:hover,
+    .read-more-btn:focus {
+      background-color: var(--pastel-red-dark);
+      box-shadow: 0 0 12px 4px rgba(214, 90, 87, 0.7);
+      border-color: var(--pastel-red-light);
+      color: #fff9f9;
+      outline: none;
+    }
+    .read-more-btn:focus-visible {
+      outline: 3px solid var(--pastel-red-light);
+      outline-offset: 3px;
+    }
+    .plant-details {
+      display: none;
+      padding: 20px;
+      background: #fce7e6;
+      font-size: 15px;
+      color: var(--text-dark);
+      line-height: 1.4;
+      border-radius: 0 0 15px 15px;
+    }
+    .plant-details img,
+    .plant-details video {
+      width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    /* Trending Section Styling */
+    .trending {
+      margin: 40px 0 20px 0;
+      padding: 0 20px;
+    }
+    .trending h2 {
+      font-size: 2rem;
+      color: #43a047;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      text-align: center;
+      text-shadow: 0 2px 8px #e0e0e0;
+    }
+    .items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .item {
+      background: #fff;
+      border-radius: 50%;
+      padding: 18px;
+      width: 150px;
+      height: 150px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(67,160,71,0.10);
+      cursor: pointer;
+      transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+      border: 2px solid #f3f3f3;
+      position: relative;
+    }
+    .item:hover {
+      background: #e8f5e9;
+      box-shadow: 0 6px 18px rgba(67,160,71,0.18);
+      transform: translateY(-6px) scale(1.04);
+      border-color: #43a047;
+    }
+    .item img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 2px solid #43a04722;
+      background: #fafafa;
+    }
+    .item p {
+      margin: 0;
+      font-size: 15px;
+      color: #333;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .banner {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      margin: 0 20px 40px 20px;
+    }
+    .banner div {
+      flex: 1;
+      background-color: #f3f3f3;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s;
+      margin-bottom: 10px;
+      margin-right: 0;
+      margin-left: 0;
+      box-shadow: 0 2px 8px #e0e0e0;
+    }
+    .banner div:hover {
+      background: #e8f5e9;
+      box-shadow: 0 6px 18px rgba(67,160,71,0.18);
+    }
+    .banner h3 {
+      margin: 0 0 8px 0;
+      color: #43a047;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .banner p {
+      margin: 0;
+      color: #555;
+      font-size: 1rem;
+    }
+    /* Queries Section Styling */
+    .queries-section {
+      background: #f9d5d3;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(214,90,87,0.12);
+      margin: 40px auto 30px auto;
+      max-width: 700px;
+      padding: 32px 24px 24px 24px;
+      color: #4a2c2a;
+    }
+    .queries-section h2 {
+      color: #d65a57;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      text-align: center;
+      font-weight: 700;
+      text-shadow: 0 2px 8px #f4a6a3;
+    }
+    .queries-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .queries-section label {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #b71c1c;
+    }
+    .queries-section input,
+    .queries-section textarea {
+      padding: 10px;
+      border: 1.5px solid #f4a6a3;
+      border-radius: 6px;
+      font-size: 15px;
+      background: #fff;
+      color: #4a2c2a;
+      resize: vertical;
+      transition: border-color 0.3s;
+    }
+    .queries-section input:focus,
+    .queries-section textarea:focus {
+      border-color: #d65a57;
+      outline: none;
+      box-shadow: 0 0 6px #d65a57aa;
+    }
+    .queries-section button {
+      background: #d65a57;
+      color: #fff;
+      border: none;
+      padding: 12px 0;
+      font-size: 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 8px #f4a6a3;
+    }
+    .queries-section button:hover {
+      background: #b71c1c;
+      box-shadow: 0 4px 16px #f4a6a3;
+    }
+    .contact-details {
+      margin-top: 18px;
+      background: #fff5f5;
+      border-radius: 8px;
+      padding: 18px 16px;
+      box-shadow: 0 2px 8px #f4a6a3;
+      color: #4a2c2a;
+      font-size: 15px;
+    }
+    .contact-details h3 {
+      margin-top: 0;
+      color: #d65a57;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .contact-details p {
+      margin: 6px 0;
+      color: #4a2c2a;
+    }
+    @media (max-width: 900px) {
+      .banner {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .banner div {
+        margin-bottom: 0;
+      }
+      .items {
+        gap: 18px;
+      }
+      .item {
+        width: 120px;
+        height: 120px;
+        padding: 10px;
+      }
+      .item img {
+        width: 50px;
+        height: 50px;
+      }
+      .item p {
+        font-size: 13px;
+      }
+      .queries-section {
+        padding: 18px 8px 16px 8px;
+      }
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .search-bar {
+        width: 100%;
+        max-width: none;
+      }
+      .icons {
+        gap: 15px;
+        font-size: 12px;
+      }
+      .icons i {
+        font-size: 18px;
+      }
+      .hero-text h1 {
+        font-size: 32px;
+      }
+      .hero-text p {
+        font-size: 18px;
+      }
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .banner {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .queries-section {
+        padding: 12px 2vw 10px 2vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <span id="rewards-btn">Rewards</span>
+    <span id="help-btn">Help</span>
+    <span id="trackorder-btn">Track Order</span>
+    <span id="orders-btn">Orders</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">tree<span>essentials</span></div>
+    <input type="text" placeholder="What are you looking for?" class="search-bar" id="searchInput" />
+
+    <div class="icons">
+      <span id="supportBtn"><i class="fa-solid fa-headset"></i> Expert Support</span>
+      <i class="fa-regular fa-user" title="Login" id="loginBtn"></i>
+      <div style="position:relative;display:inline-block;">
+        <i class="fa-solid fa-cart-shopping" title="Cart" id="cartBtn"></i>
+        <span id="cartCount" class="cart-badge">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category Menu -->
+  <nav class="category-menu">
+    <ul>
+      <li><a href="laxpruning.html">Pruning Tools</a></li>
+      <li><a href="laxsapandplants.html">Plants</a></li>
+      <li><a href="laxseeds.html">Seeds</a></li>
+      <li><a href="laxfertilizers.html">Soil & Fertilizer</a></li>
+      <li><a href="laxaccessosories.html">Accessories</a></li>
+    </ul>
+  </nav>
+
+  <!-- Round Categories -->
+  <section class="circle-categories">
+    <a href="laxpruning.html" class="circle">
+      <i class="fa-solid fa-leaf"></i><span>PRUNING TOOLS</span>
+    </a>
+    <a href="laxsapandplants.html" class="circle">
+      <i class="fa-solid fa-tree"></i><span>PLANTS</span>
+    </a>
+    <a href="laxseeds.html" class="circle">
+      <i class="fa-solid fa-seedling"></i><span>SEEDS</span>
+    </a>
+    <a href="laxfertilizers.html" class="circle">
+      <i class="fa-solid fa-box"></i><span>FERTILIZERS</span>
+    </a>
+    <a href="laxaccessosories.html" class="circle">
+      <i class="fa-solid fa-toolbox"></i><span>ACCESSORIES</span>
+    </a>
+  </section>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <img src="c:\Users\aswit\Downloads\robin-wersich-Q0IrpWQIMR4-unsplash.jpg" alt="Hero Banner" />
+    <div class="hero-text">
+      <h1>Happiness</h1>
+      <p>is growing your own <span>food</span></p>
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal">
+      <span class="modal-close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+      <h2>Login</h2>
+      <input type="text" placeholder="Email or Username" />
+      <input type="password" placeholder="Password" />
+      <button onclick="document.getElementById('loginModal').style.display='none'">Login</button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="modal-backdrop">
+    <div class="modal" id="cartModalContent">
+      <span class="modal-close" onclick="document.getElementById('cartModal').style.display='none'">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cartItems"></div>
+      <p id="cartTotal"></p>
+      <button onclick="document.getElementById('cartModal').style.display='none'">Close</button>
+    </div>
+  </div>
+
+  <!-- Expert Support Modal -->
+  <div class="modal-backdrop" id="supportModal">
+    <div class="modal">
+      <span class="modal-close" onclick="document.getElementById('supportModal').style.display='none'">&times;</span>
+      <h2>Expert Support</h2>
+      <p>Need help with your plants or orders? Contact our experts!</p>
+      <p><i class="fa-solid fa-envelope"></i> <a href="mailto:support@treeessentials.com">support@treeessentials.com</a></p>
+      <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+      <button onclick="window.location.href='mailto:support@treeessentials.com'">Email Support</button>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div class="modal-backdrop" id="profileModal">
+    <div class="modal">
+      <span class="modal-close" onclick="document.getElementById('profileModal').style.display='none'">&times;</span>
+      <h2>Profile</h2>
+      <p>Welcome to your profile!</p>
+      <button onclick="document.getElementById('profileModal').style.display='none'">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Cart Functionality ---
+    // Demo products for cart (should match product titles in .product-grid)
+    const products = [
+      {
+        id: 1,
+        name: "Top 4 Die Hard Succulents Pack",
+        price: 559,
+        oldPrice: 1614,
+        img: "succulents copy.jpg"
+      },
+      {
+        id: 2,
+        name: "5 Best Fragrant Plants",
+        price: 1459,
+        oldPrice: 1645,
+        img: "fragrant.jpg"
+      },
+      {
+        id: 3,
+        name: "Mini Succulent Garden Pack",
+        price: 499,
+        oldPrice: 999,
+        img: "exotic.jpg"
+      },
+      {
+        id: 4,
+        name: "5 Best Indoor Plants Pack",
+        price: 1159,
+        oldPrice: 1459,
+        img: "indoor.jpg"
+      },
+      {
+        id: 5,
+        name: "Aquatic Oxygen Plants",
+        price: 1299,
+        oldPrice: 1649,
+        img: "aquatic.jpg"
+      }
+    ];
+
+    // Cart state
+    let cart = [];
+
+    // Add to cart buttons for demo (add to each product)
+    document.addEventListener("DOMContentLoaded", function () {
+      // Add "Add to Cart" buttons
+      document.querySelectorAll(".product").forEach((el, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = "Add to Cart";
+        btn.style.marginTop = "10px";
+        btn.style.width = "100%";
+        btn.style.background = "#43a047";
+        btn.style.color = "#fff";
+        btn.style.border = "none";
+        btn.style.borderRadius = "4px";
+        btn.style.padding = "8px 0";
+        btn.style.fontWeight = "bold";
+        btn.style.cursor = "pointer";
+        btn.onmouseover = () => btn.style.background = "#388e3c";
+        btn.onmouseout = () => btn.style.background = "#43a047";
+        btn.onclick = function (e) {
+          e.preventDefault();
+          addToCart(products[idx]);
+        };
+        el.appendChild(btn);
+      });
+      updateCartCount();
+    });
+
+    function addToCart(product) {
+      const found = cart.find(item => item.id === product.id);
+      if (found) {
+        found.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      const cartCount = document.getElementById("cartCount");
+      cartCount.textContent = count;
+      cartCount.style.display = count > 0 ? "inline-block" : "none";
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        cartTotal.textContent = "";
+        return;
+      }
+      let html = "<ul style='list-style:none;padding:0;'>";
+      let total = 0;
+      cart.forEach(item => {
+        html += `<li style="margin-bottom:10px;display:flex;align-items:center;">
+          <img src="${item.img}" alt="${item.name}" style="width:40px;height:40px;border-radius:6px;margin-right:10px;">
+          <span style="flex:1;">${item.name} x${item.qty}</span>
+          <span>₹${item.price * item.qty}</span>
+          <button onclick="removeFromCart(${item.id})" style="margin-left:10px;background:#d65a57;color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;">Remove</button>
+        </li>`;
+        total += item.price * item.qty;
+      });
+      html += "</ul>";
+      cartItems.innerHTML = html;
+      cartTotal.textContent = "Total: ₹" + total;
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      updateCartCount();
+      renderCart();
+    }
+
+    // Cart Modal
+    document.getElementById("cartBtn").onclick = function () {
+      renderCart();
+      document.getElementById("cartModal").style.display = "flex";
+    };
+
+    // --- Profile Modal ---
+    document.getElementById("loginBtn").onclick = function () {
+      document.getElementById("profileModal").style.display = "flex";
+    };
+
+    // --- Expert Support Modal ---
+    document.getElementById("supportBtn").onclick = function () {
+      document.getElementById("supportModal").style.display = "flex";
+    };
+
+    // --- Modal Close on outside click ---
+    window.onclick = function(event) {
+      if (event.target === document.getElementById("loginModal")) {
+        document.getElementById("loginModal").style.display = "none";
+      }
+      if (event.target === document.getElementById("cartModal")) {
+        document.getElementById("cartModal").style.display = "none";
+      }
+      if (event.target === document.getElementById("supportModal")) {
+        document.getElementById("supportModal").style.display = "none";
+      }
+      if (event.target === document.getElementById("profileModal")) {
+        document.getElementById("profileModal").style.display = "none";
+      }
+    };
+
+    // --- Product Search ---
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll(".product").forEach(product => {
+        const name = product.textContent.toLowerCase();
+        product.style.display = name.includes(query) ? "block" : "none";
+      });
+    });
+
+    // --- Plant Card Read More ---
+    function toggleDetails(button) {
+      const details = button.nextElementSibling;
+      if (details.style.display === "block") {
+        details.style.display = "none";
+        button.textContent = "Read More";
+      } else {
+        details.style.display = "block";
+        button.textContent = "Read Less";
+      }
+    }
+    // --- Item click alert ---
+    function viewItem(name) {
+      alert("Navigating to details of: " + name);
+    }
+    // --- Queries form submit ---
+    function submitQuery(event) {
+      event.preventDefault();
+      alert("Thank you for your query! We will get back to you soon.");
+      event.target.reset();
+    }
+    // --- Navigation bar demo actions ---
+    document.getElementById("rewards-btn").onclick = function() {
+      alert("Rewards: Earn points on every purchase!");
+    };
+    document.getElementById("help-btn").onclick = function() {
+      alert("Help: Visit our Help Center or contact support.");
+    };
+    document.getElementById("trackorder-btn").onclick = function() {
+      alert("Track Order: Enter your order ID on the Track Order page.");
+    };
+    document.getElementById("orders-btn").onclick = function() {
+      alert("Orders: View your past orders in your profile.");
+    };
+  </script>
+
+  <!-- First Page: Services -->
+  <section class="services">
+    <a href="helpcenter.html" style="text-align: center; text-decoration: none; color: inherit;">
+      <div class="service">
+        <img src="https://img.icons8.com/ios-filled/50/help.png" alt="Help" />
+        <p>Help Center</p>
+      </div>
+    </a>
+    <a href="offerss.html" style="text-align: center; text-decoration: none; color: inherit;">
+      <div class="service">
+        <img src="https://img.icons8.com/ios-filled/50/discount--v1.png" alt="Offers" />
+        <p>Offers</p>
+      </div>
+    </a>
+  </section>
+
+  <!-- First Page: Products -->
+  <main class="products">
+    <h2>Value For Money – Upto 35% Off</h2>
+    <div class="product-grid">
+      <a href="succulents.html" class="product" aria-label="Top 4 Die Hard Succulents Pack">
+        <div class="tag red">Save 65%</div>
+        <img src="succulents copy.jpg" alt="Succulents" />
+        <p class="price">₹559 <span class="old-price">₹1,614</span></p>
+        <p class="title">Top 4 Die Hard Succulents Pack</p>
+        <p class="rating">⭐ 373 reviews</p>
+      </a>
+      <a href="fragrantplants.html" class="product" aria-label="5 Best Fragrant Plants">
+        <div class="tag red">Save 12%</div>
+        <img src="fragrant.jpg" alt="Fragrant Plants" />
+        <p class="price">₹1,459 <span class="old-price">₹1,645</span></p>
+        <p class="title">5 Best Fragrant Plants</p>
+        <p class="rating">⭐ 405 reviews</p>
+      </a>
+      <a href="exoticplants.html" class="product" aria-label="Exotic Plants Sale">
+        <div class="tag pink">Save up to 50%</div>
+        <img src="exotic.jpg" alt="Mini Succulent" />
+        <p class="price">₹499 <span class="old-price">₹999</span></p>
+        <p class="title">Mini Succulent Garden Pack</p>
+        <p class="rating">⭐ 88 reviews</p>
+      </a>
+      <a href="indoorplants.html" class="product" aria-label="5 Best Indoor Plants Pack">
+        <div class="tag red">Save 21%</div>
+        <img src="indoor.jpg" alt="Indoor Plants" />
+        <p class="price">₹1,159 <span class="old-price">₹1,459</span></p>
+        <p class="title">5 Best Indoor Plants Pack</p>
+        <p class="rating">⭐ 320 reviews</p>
+      </a>
+      <a href="aquaticplants.html" class="product" aria-label="Aquatic Plants">
+        <div class="tag pink">Top</div>
+        <img src="aquatic.jpg" alt="Oxygen Plants" />
+        <p class="price">₹1,299 <span class="old-price">₹1,649</span></p>
+        <p class="title">Aquatic Oxygen Plants</p>
+        <p class="rating">⭐ 120 reviews</p>
+      </a>
+    </div>
+  </main>
+
+  <!-- Second Page: Trending Section -->
+  <div class="trending">
+    <h2>Trending</h2>
+  </div>
+  <div class="items" id="itemsContainer">
+    <div class="items" id="itemsContainer">
+  <a href="bonsai.html" class="item">
+    <img src="Bonsai plant.jpg" alt="Bonsai">
+    <p>Bonsai Plants - Upto 25% Off</p>
+  </a>+
+
+  <a href="ceramicplanters.html" class="item">
+    <img src="Ceramic planters.jpg" alt="Ceramic">
+    <p>Ceramic Planters - Starting ₹299</p>
+  </a>
+
+  <a href="kokedama.html" class="item">
+    <img src="Kokedama plant.jpg" alt="Kokedama">
+    <p>Kokedama - Starting ₹249</p>
+  </a>
+
+  <a href="month-wise-gardening.html" class="item">
+    <img src="gardenis.jpg" alt="Gardening">
+    <p>Month Wise Gardening - Upto 65% Off</p>
+  </a>
+</div>
+
+  </div>
+  <div class="banner">
+    <div onclick="location.href='planters.html'">
+      <h3>Planters - Starting ₹129</h3>
+      <p>Add color to your garden. 400+ pots of different materials</p>
+    </div>
+    <div onclick="location.href='soilandfertilizers.html'">
+      <h3>Soil & Fertilizers - Starting ₹100</h3>
+    </div>
+  </div>
+
+  <!-- Second Page: Plant Cards -->
+  <h1>Plant Care & Growth Notes - Indian Plants & Trees</h1>
+  <div class="container">
+    <!-- Neem Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="neem.jpg" alt="Neem Tree" />
+      <div class="plant-summary">Neem Tree - Known as the 'Village Pharmacy', famous for medicinal properties.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Neem prefers full sun, well-drained soil. Water moderately during dry periods. Tolerant to drought and pests.</p>
+        <img src="neemleaves.jpg" alt="Neem Leaves" />
+        <video controls>
+          <source src="https://www.youtube.com/shorts/LcKnlUlEbJc?feature=share" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Banyan Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="banyan.jpg" alt="Banyan Tree" />
+      <div class="plant-summary">Banyan Tree - National tree of India, famous for its aerial roots and shade.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Requires full sun, deep watering especially when young. Thrives in tropical and subtropical climates.</p>
+        <img src="banyanroots.jpg" alt="Banyan Tree Roots" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/asdasdas.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Tulsi Plant Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="tulasi.jpg" alt="Tulsi Plant" />
+      <div class="plant-summary">Tulsi (Holy Basil) - Sacred plant with medicinal and spiritual significance.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Grows best in warm, sunny places. Water regularly but do not overwater. Prefers well-drained soil.</p>
+        <img src="tualsileaves.jpg" alt="Tulsi Leaves" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Mango Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="mango.jpg" alt="Mango Tree" />
+      <div class="plant-summary">Mango Tree - The king of fruits, widely grown across India.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Prefers full sunlight and deep, well-drained soil. Water young plants regularly; mature trees are drought tolerant.</p>
+        <img src="mangofandl.jpg" alt="Mango Fruit and Leaves" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Marigold Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="marigold.jpg" alt="Marigold" />
+      <div class="plant-summary">Marigold - Bright and cheerful flower, widely used in Indian festivals and rituals.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Requires full sun and well-drained soil. Water moderately; deadhead spent flowers for prolonged blooming.</p>
+        <img src="marigoldflowers.jpg" alt="Marigold Flowers" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/asdasdas.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Jasmine Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="jasm.jpg" alt="Jasmine" />
+      <div class="plant-summary">Jasmine - Fragrant flowering plant widely grown in India for its scent and beauty.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Thrives in full sun to partial shade. Water regularly but avoid waterlogging. Prefers fertile, well-drained soil.</p>
+        <img src="jasm.jpg" alt="Jasmine Flowers" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Tulip Tree Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="tulip.jpg" alt="Tulip Tree (Saptaparni)" />
+      <div class="plant-summary">Tulip Tree (Saptaparni) - Known for its fragrant flowers and traditional medicinal uses.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Prefers full to partial sunlight. Requires well-drained soil and moderate watering. Tolerates a range of soil types.</p>
+        <img src="tulip.jpg" alt="Tulip Tree Flower" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- Lotus Card -->
+    <div class="plant-card">
+      <img class="plant-image" src="lotus.jpg" alt="Lotus" />
+      <div class="plant-summary">Lotus - Sacred Indian national flower symbolizing purity and beauty.</div>
+      <button class="read-more-btn" onclick="toggleDetails(this)">Read More</button>
+      <div class="plant-details">
+        <p><strong>Care Instructions:</strong> Needs full sunlight and still, shallow water. Use rich, loamy soil in containers or ponds. Avoid water disturbance.</p>
+        <img src="lotus.jpg" alt="Lotus Flower" />
+        <video controls>
+          <source src="https://sample-videos.com/video123/mp4/480/asdasdas.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- Queries Section -->
+  <section class="queries-section">
+    <h2>General Queries & Contact Us</h2>
+    <form onsubmit="submitQuery(event)">
+      <label for="qname">Your Name</label>
+      <input type="text" id="qname" name="qname" required />
+
+      <label for="qemail">Your Email</label>
+      <input type="email" id="qemail" name="qemail" required />
+
+      <label for="qmessage">Your Query</label>
+      <textarea id="qmessage" name="qmessage" rows="4" required></textarea>
+
+      <button type="submit">Submit Query</button>
+    </form>
+    <div class="contact-details">
+      <h3>Contact Details</h3>
+      <p><i class="fa-solid fa-envelope"></i> Email: <a href="mailto:support@treeessentials.com">support@treeessentials.com</a></p>
+      <p><i class="fa-solid fa-phone"></i> Phone: +91 98765 43210</p>
+      <p><i class="fa-solid fa-location-dot"></i> Address: 123, Warangal, Hyderabad, Telangana, India</p>
+      <p><i class="fa-solid fa-clock"></i> Support Hours: 9:00 AM – 7:00 PM (Mon-Sat)</p>
+    </div>
+  </section>
+</body>
+</html>
