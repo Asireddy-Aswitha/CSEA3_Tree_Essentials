@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NurseryLive Clone - Combined Code</title>
+    <style>
+        /* General Body and Container Styles */
+        body {
+            font-family: Arial, sans-serif; /* Approximating the font */
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7; /* Light background similar to the image */
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center; /* Center the navigation */
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%; /* Adjust as needed */
+            max-width: 1200px; /* Max width of content */
+        }
+
+        .top-nav .logo img {
+            height: 40px; /* Adjust logo size */
+        }
+
+        .top-nav .search-bar {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-grow: 1; /* Allow search bar to grow */
+            margin: 0 20px; /* Space around search bar */
+            max-width: 600px;
+        }
+
+        .top-nav .search-bar input {
+            border: none;
+            padding: 8px 12px;
+            flex-grow: 1;
+            outline: none;
+        }
+
+        .top-nav .search-bar button {
+            background-color: #f0f0f0; /* Light background for button */
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-nav .nav-links span {
+            font-size: 13px;
+            text-align: right;
+            line-height: 1.2;
+        }
+
+        .top-nav .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Trending Section Styles */
+        .trending-section h2,
+        .garden-decor-care h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .trending-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            gap: 20px; /* Space between items */
+        }
+
+        .trending-item {
+            text-align: center;
+            margin-bottom: 20px;
+            flex: 0 0 calc(25% - 20px); /* Four items per row, accounting for gap */
+            max-width: 200px; /* Limit individual item width */
+        }
+
+        @media (max-width: 992px) {
+            .trending-item {
+                flex: 0 0 calc(50% - 20px); /* Two items per row on medium screens */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .trending-item {
+                flex: 0 0 calc(100% - 20px); /* One item per row on small screens */
+            }
+        }
+
+        .item-circle {
+            width: 150px; /* Size of the circular image container */
+            height: 150px;
+            border-radius: 50%; /* Makes it a circle */
+            background-size: cover; /* Ensures image covers the circle */
+            background-position: center; /* Centers the image */
+            margin: 0 auto 15px auto; /* Center circle and add space below */
+            border: 1px solid #eee; /* Subtle border */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow */
+            display: flex; /* For vertically centering content if needed, not strictly for image */
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9; /* Fallback background for circles */
+        }
+
+        .trending-item h3 {
+            font-size: 18px;
+            margin: 10px 0 5px 0;
+            color: #555; /* Slightly darker grey */
+        }
+
+        .trending-item p {
+            font-size: 14px;
+            color: #888; /* Lighter grey for descriptions */
+        }
+
+        /* Garden Decor & Care Section */
+        .garden-decor-care .categories {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-item {
+            background-color: #f0f8f4; /* Light green background, approximate */
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1; /* Allow items to grow/shrink */
+            min-width: 280px; /* Minimum width for category items */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .category-item.planters {
+            background-color: #e6f7ff; /* Light blue for planters, approximate */
+            /* You could add a background image here if you have one */
+            /* background-image: url('images/planters_bg.jpg'); */
+            background-size: cover;
+            background-position: right center;
+        }
+
+        .category-item.soil-fertilizers {
+            background-color: #fff0e6; /* Light orange for soil, approximate */
+        }
+
+        .category-item h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .category-item p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background-color: #eee;
+            color: #555;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <div class="logo">
+                <img src="placeholder_logo.png" alt="NurseryLive Logo">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="What are you looking for?">
+                <button type="submit">🔍</button>
+            </div>
+            <div class="nav-links">
+                <span>Expert Support <br> Available 24/7</span>
+                <a href="#">Login</a>
+                <a href="#">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="trending-section">
+            <h2>Trending</h2>
+            <div class="trending-items">
+                <div class="trending-item">
+                    <div class="item-circle" style="background-image: url('images/bonsai_plants.jpg');"></div>
+                    <h3>Bonsai Plants</h3>
+                    <p>- Upto 25% Off</p>
+                </div>
+                <div class="trending-item">
+                    <div class="item-circle" style="background-image: url('images/ceramic_planters.jpg');"></div>
+                    <h3>Ceramic Planters</h3>
+                    <p>- Starting ₹299</p>
+                </div>
+                <div class="trending-item">
+                    <div class="item-circle" style="background-image: url('images/kokedama.jpg');"></div>
+                    <h3>Kokedama</h3>
+                    <p>- Starting ₹249</p>
+                </div>
+                <div class="trending-item">
+                    <div class="item-circle" style="background-image: url('images/gardening_kits.jpg');"></div>
+                    <h3>Month Wise Gardening</h3>
+                    <p>- Upto 65% Off</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="garden-decor-care">
+            <h2>Garden Decor & Care</h2>
+            <div class="categories">
+                <div class="category-item planters">
+                    <h3>Planters</h3>
+                    <p>- Starting ₹129</p>
+                    <p>Add color to your garden. 400+ pots of different materials</p>
+                </div>
+                <div class="category-item soil-fertilizers">
+                    <h3>Soil & Fertilizers</h3>
+                    <p>- Starting ₹100</p>
+                </div>
+                </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 NurseryLive Clone. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // This file is mostly a placeholder for future dynamic content or interactions.
+        // For the static layout you provided, JavaScript isn't strictly necessary.
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Website loaded!');
+
+            // Example of a simple interaction (not visible in your current screenshot,
+            // but useful for a real website)
+            const searchButton = document.querySelector('.search-bar button');
+            if (searchButton) {
+                searchButton.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent form submission
+                    const searchTerm = document.querySelector('.search-bar input').value;
+                    if (searchTerm) {
+                        alert(`Searching for: "${searchTerm}"`);
+                        // In a real app, you'd trigger an API call or navigate to search results
+                    } else {
+                        alert('Please enter a search term!');
+                    }
+                });
+            }
+
+            // You could add logic here for:
+            // - Image lazy loading
+            // - Carousel functionality (if items were scrollable)
+            // - Fetching data from an API to populate content
+            // - User interaction tracking
+        });
+    </script>
+</body>
+</html>
