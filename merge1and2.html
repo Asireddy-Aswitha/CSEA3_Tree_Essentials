@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tree Essentials</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+    /* Top Navigation */
+    .top-nav {
+      background: #f3f3f3;
+      padding: 6px 20px;
+      font-size: 13px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 25px;
+      user-select: none;
+    }
+    .top-nav span {
+      cursor: pointer;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    .top-nav span:hover {
+      color: #43a047;
+      text-decoration: underline;
+    }
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #ddd;
+      gap: 20px;
+    }
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #333;
+      white-space: nowrap;
+    }
+    .logo span {
+      color: #43a047;
+    }
+    .search-bar {
+      flex-grow: 1;
+      max-width: 600px;
+      padding: 8px 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+    .search-bar:focus {
+      border-color: #43a047;
+      box-shadow: 0 0 5px #43a047aa;
+    }
+    /* Icons */
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .icons span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #555;
+      cursor: default;
+      user-select: none;
+    }
+    .icons i {
+      font-size: 20px;
+      cursor: pointer;
+      color: #555;
+      transition: color 0.3s ease;
+    }
+    .icons i:hover {
+      color: #43a047;
+    }
+    /* Category Menu */
+    .category-menu ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      padding: 10px 20px;
+      margin: 0;
+      background-color: #f8f8f8;
+      overflow-x: auto;
+      scrollbar-width: none;
+      justify-content: center;
+    }
+    .category-menu ul::-webkit-scrollbar {
+      display: none;
+    }
+    .category-menu li {
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+      color: #444;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .category-menu li:hover {
+      color: #43a047;
+      border-color: #43a047;
+    }
+    /* Circle Categories */
+    .circle-categories {
+      display: flex;
+      gap: 20px;
+      padding: 15px 20px;
+      overflow-x: auto;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      scrollbar-width: none;
+    }
+    .circle-categories::-webkit-scrollbar {
+      display: none;
+    }
+    .circle {
+      width: 80px;
+      height: 80px;
+      background: #f1f1f1;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      color: #444;
+      user-select: none;
+    }
+    .circle i {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .circle:hover {
+      background-color: #43a047;
+      color: #fff;
+      box-shadow: 0 4px 8px rgba(67,160,71,0.5);
+    }
+    /* Hero Section */
+    .hero {
+      position: relative;
+      text-align: center;
+      color: #333;
+    }
+    .hero img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hero-text {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+    .hero-text p {
+      font-size: 24px;
+      margin: 10px 0 0 0;
+    }
+    .hero-text span {
+      color: #0d2aa9;
+      font-weight: bold;
+    }
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 6px;
+      width: 320px;
+      max-width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-weight: 700;
+      font-size: 22px;
+      color: #43a047;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: #43a047;
+    }
+    .modal input[type="text"], .modal input[type="password"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin: 8px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+      outline-offset: 2px;
+    }
+    .modal button {
+      width: 100%;
+      background-color: #43a047;
+      color: white;
+      border: none;
+      padding: 10px 0;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .modal button:hover {
+      background-color: #388e3c;
+    }
+    /* Second Page Styles */
+    .services {
+      display: flex;
+      justify-content: space-around;
+      background-color: #f0f0f0;
+      padding: 20px 0;
+      flex-wrap: wrap;
+    }
+    .service {
+      text-align: center;
+      font-size: 14px;
+      margin: 10px;
+    }
+    .service img {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 5px;
+    }
+    .products {
+      padding: 20px 40px;
+    }
+    .products h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      display: block;
+      background-color: white;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.3s ease;
+    }
+    .product:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: gray;
+      font-size: 0.9em;
+      margin-left: 5px;
+    }
+    .title {
+      font-size: 14px;
+      margin: 8px 0 4px;
+    }
+    .rating {
+      font-size: 13px;
+      color: #666;
+    }
+    .tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 12px;
+      background: #f00;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .tag.pink {
+      background: hotpink;
+    }
+    /* Modal styles for second page */
+    #login-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      z-index: 1000;
+    }
+    #modal-bg {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .search-bar {
+        width: 100%;
+        max-width: none;
+      }
+      .icons {
+        gap: 15px;
+        font-size: 12px;
+      }
+      .icons i {
+        font-size: 18px;
+      }
+      .hero-text h1 {
+        font-size: 32px;
+      }
+      .hero-text p {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <span id="rewards-btn">Rewards</span>
+    <span id="help-btn">Help</span>
+    <span id="trackorder-btn">Track Order</span>
+    <span id="orders-btn">Orders</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">TREE<span>ESSENTIALS</span></div>
+    <input type="text" placeholder="What are you looking for?" class="search-bar" id="searchInput" />
+
+    <div class="icons">
+      <span><i class="fa-solid fa-headset"></i> Expert Support</span>
+      <i class="fa-regular fa-user" title="Login" id="loginBtn"></i>
+      <i class="fa-solid fa-cart-shopping" title="Cart" id="cartBtn"></i>
+    </div>
+  </header>
+
+  <!-- Category Menu -->
+  <nav class="category-menu">
+    <nav class="category-menu">
+  <ul>
+    <li><a href="laxpruning.html">Pruning Tools</a></li>
+    <li><a href="laxsapandplants.html">Plants</a></li>
+    <li><a href="laxseeds.html">Seeds</a></li>
+    
+    <li><a href="laxfertilizers.html">Soil & Fertilizer</a></li>
+    <li><a href="laxaccessosories.html">Accessories</a></li>
+  </ul>
+</nav>
+
+
+  <!-- Round Categories -->
+ <section class="circle-categories">
+  <a href="laxpruning.html" class="circle">
+    <i class="fa-solid fa-leaf"></i><span>PRUNING TOOLS</span>
+  </a>
+  <a href="laxsapandplants.html" class="circle">
+    <i class="fa-solid fa-tree"></i><span>PLANTS</span>
+  </a>
+  <a href="laxseeds.html" class="circle">
+    <i class="fa-solid fa-seedling"></i><span>SEEDS</span>
+  </a>
+  <a href="laxfertilizers.html" class="circle">
+    <i class="fa-solid fa-box"></i><span>FERTILIZERS</span>
+  </a>
+  <a href="laxaccessosories.html" class="circle">
+    <i class="fa-solid fa-toolbox"></i><span>ACCESSORIES</span>
+  </a>
+</section>
+
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <img src="c:\Users\aswit\Downloads\robin-wersich-Q0IrpWQIMR4-unsplash.jpg" alt="Hero Banner" />
+    <div class="hero-text">
+      <h1>Happiness</h1>
+      <p>is growing your own <span>food</span></p>
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal">
+      <span class="modal-close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+      <h2>Login</h2>
+      <input type="text" placeholder="Email or Username" />
+      <input type="password" placeholder="Password" />
+      <button>Login</button>
+    </div>
+  </div>
+
+  <script>
+   document.getElementById("loginBtn").onclick = function () {
+      document.getElementById("loginModal").style.display = "flex";
+    };
+    window.onclick = function(event) {
+      if (event.target === document.getElementById("loginModal")) {
+        document.getElementById("loginModal").style.display = "none";
+      }
+    };
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll(".product").forEach(product => {
+        const name = product.textContent.toLowerCase();
+        product.style.display = name.includes(query) ? "block" : "none";
+      });
+    }); 
+  document.getElementById("searchInput").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+
+    document.querySelectorAll(".product").forEach(product => {
+      const text = product.textContent.toLowerCase();
+      product.style.display = text.includes(query) ? "block" : "none";
+    });
+  });
+
+
+    document.getElementById("loginBtn").addEventListener("click", function () {
+      document.getElementById("loginModal").style.display = "flex";
+    });
+
+    window.addEventListener("click", function (event) {
+      const modal = document.getElementById("loginModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+
+  <!-- Second Page Content -->
+  <section class="services">
+    <a href="helpcenter.html" style="text-align: center; text-decoration: none; color: inherit;">
+      <div class="service">
+        <img src="https://img.icons8.com/ios-filled/50/help.png" alt="Help" />
+        <p>Help Center</p>
+      </div>
+    </a>
+
+    <a href="offerss.html" style="text-align: center; text-decoration: none; color: inherit;">
+      <div class="service">
+        <img src="https://img.icons8.com/ios-filled/50/discount--v1.png" alt="Offers" />
+        <p>Offers</p>
+      </div>
+    </a>
+  </section>
+
+  <!-- Products -->
+  <main class="products">
+    <h2>Value For Money – Upto 35% Off</h2>
+    <div class="product-grid">
+      <a href="succulents.html" class="product" aria-label="Top 4 Die Hard Succulents Pack">
+        <div class="tag red">Save 65%</div>
+        <img src="succulents copy.jpg" alt="Succulents" />
+        <p class="price">₹559 <span class="old-price">₹1,614</span></p>
+        <p class="title">Top 4 Die Hard Succulents Pack</p>
+        <p class="rating">⭐ 373 reviews</p>
+      </a>
+
+      <a href="fragrantplants.html" class="product" aria-label="5 Best Fragrant Plants">
+        <div class="tag red">Save 12%</div>
+        <img src="fragrant.jpg" alt="Fragrant Plants" />
+        <p class="price">₹1,459 <span class="old-price">₹1,645</span></p>
+        <p class="title">5 Best Fragrant Plants</p>
+        <p class="rating">⭐ 405 reviews</p>
+      </a>
+
+      <a href="exoticplants.html" class="product" aria-label="Exotic Plants Sale">
+        <div class="tag pink">Save up to 50%</div>
+        <img src="exotic.jpg" alt="Mini Succulent" />
+        <p class="price">₹499 <span class="old-price">₹999</span></p>
+        <p class="title">Mini Succulent Garden Pack</p>
+        <p class="rating">⭐ 88 reviews</p>
+      </a>
+
+      <a href="indoorplants.html" class="product" aria-label="5 Best Indoor Plants Pack">
+        <div class="tag red">Save 21%</div>
+        <img src="indoor.jpg" alt="Indoor Plants" />
+        <p class="price">₹1,159 <span class="old-price">₹1,459</span></p>
+        <p class="title">5 Best Indoor Plants Pack</p>
+        <p class="rating">⭐ 320 reviews</p>
+      </a>
+
+      <a href="aquaticplants.html" class="product" aria-label="Aquatic Plants">
+        <div class="tag pink">Top</div>
+        <img src="aquatic.jpg" alt="Oxygen Plants" />
+        <p class="price">₹1,299 <span class="old-price">₹1,649</span
