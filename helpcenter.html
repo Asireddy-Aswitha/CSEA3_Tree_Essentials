@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Help Center - Tree Essentials</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #ffeef2; /* Pastel Pink Background */
+    }
+
+    header {
+      background-color: #f8b6c5; /* Light Pink Header */
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      color: #c2185b;
+      margin-bottom: 10px;
+    }
+
+    section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    p {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .accordion {
+      margin-top: 20px;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .accordion-title {
+      padding: 12px;
+      cursor: pointer;
+      background: #fbd3dc; /* Light pastel pink */
+      font-weight: bold;
+      color: #880e4f;
+    }
+
+    .accordion-content {
+      padding: 12px;
+      display: none;
+      background: #fff0f5;
+    }
+
+    .active + .accordion-content {
+      display: block;
+    }
+
+    .upload-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .upload-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #ec407a; /* Darker pastel pink */
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .upload-label:hover {
+      background-color: #d81b60;
+    }
+
+    .upload-label img {
+      width: 20px;
+      margin-right: 8px;
+    }
+
+    #file-upload {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #f8b6c5;
+      color: #fff;
+      font-size: 14px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Tree Essentials Help Center
+  </header>
+
+  <main>
+    <section>
+      <h2>Order Details</h2>
+      <p>You can track your order status by visiting the "Track Order" option on our homepage. You’ll need your Order ID and registered email address.</p>
+      <p>If your product hasn’t shipped yet, you can request a cancellation or make changes by contacting our support team via live chat or email.</p>
+      <p>Once your order is shipped, you’ll receive a tracking link with real-time updates from our logistics partners.</p>
+    </section>
+
+    <section>
+      <h2>Product Details</h2>
+      <p>We offer a wide variety of indoor, outdoor, flowering, and air-purifying plants. Each product listing includes the plant type, care instructions, and included pots or accessories.</p>
+      <p>If you're unsure about what plant suits your space, our expert support is available 24/7 to guide you in choosing the right products.</p>
+      <p>All plants are shipped in secure eco-friendly packaging with a detailed care guide.</p>
+    </section>
+
+    <section class="accordion">
+      <h2>Frequently Asked Questions (FAQs)</h2>
+
+      <div class="accordion-item">
+        <div class="accordion-title">How can I change my shipping address?</div>
+        <div class="accordion-content">
+          Please contact our support team within 12 hours of placing the order to update your shipping address.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-title">What should I do if my plant arrives damaged?</div>
+        <div class="accordion-content">
+          We’re sorry! Please share a photo of the plant within 24 hours of delivery and we’ll send a free replacement.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-title">Are pots included with the plant?</div>
+        <div class="accordion-content">
+          Yes, unless stated otherwise. Each product page clearly mentions what's included.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-title">Can I return my plant?</div>
+        <div class="accordion-content">
+          Plants are perishable, so we do not accept returns. However, we offer refunds or replacements for damaged items.
+        </div>
+      </div>
+
+      <!-- Photo Upload Section -->
+      <div class="upload-section">
+        <h3>Upload a Photo of the Issue</h3>
+        <label for="file-upload" class="upload-label">
+          <img src="https://img.icons8.com/ios-filled/50/upload.png" alt="Upload Icon" />
+          Choose Photo
+        </label>
+        <input type="file" id="file-upload" accept="image/*" />
+        <p style="font-size: 13px; color: #666;">Accepted formats: JPG, PNG. Max size: 5MB.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Tree Essentials. All rights reserved.
+  </footer>
+
+  <script>
+    // Accordion toggle
+    document.querySelectorAll('.accordion-title').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active');
+        const content = item.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+      });
+    });
+
+    // File upload display feedback
+    const fileInput = document.getElementById('file-upload');
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        alert(`Photo selected: ${fileInput.files[0].name}`);
+      }
+    });
+  </script>
+
+</body>
+</html>
